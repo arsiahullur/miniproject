@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Telehealth Dashboard</title>
+
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Outfit", sans-serif;
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      background: linear-gradient(-45deg, #001f3f, #003566, #005f73, #0a9396);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* 🌈 Floating Doctor Icons */
+    .floating-icon {
+      position: absolute;
+      font-size: 2.5rem;
+      opacity: 0.15;
+      color: #94d2bd;
+      animation: floatIcons 15s infinite ease-in-out;
+      z-index: 1;
+    }
+
+    @keyframes floatIcons {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-50px) rotate(20deg); }
+      100% { transform: translateY(0) rotate(0deg); }
+    }
+
+    /* Random icon placements */
+    .icon1 { top: 10%; left: 15%; animation-delay: 0s; }
+    .icon2 { top: 25%; left: 75%; animation-delay: 2s; }
+    .icon3 { top: 60%; left: 20%; animation-delay: 4s; }
+    .icon4 { top: 80%; left: 65%; animation-delay: 6s; }
+    .icon5 { top: 40%; left: 45%; animation-delay: 1s; }
+    .icon6 { top: 15%; left: 55%; animation-delay: 3s; }
+
+    /* 🏥 Header */
+    .dashboard-header {
+      text-align: center;
+      padding: 4rem 2rem 1.5rem;
+      z-index: 10;
+      position: relative;
+    }
+
+    .dashboard-header h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #e0fbfc;
+      text-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .dashboard-header p {
+      color: #cddafd;
+      font-size: 1.2rem;
+      font-weight: 500;
+      letter-spacing: 0.4px;
+    }
+
+    .logout-btn {
+      background: linear-gradient(135deg, #ee9b00, #ca6702);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      padding: 0.8rem 1.6rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1.5rem;
+      box-shadow: 0 4px 10px rgba(255, 183, 3, 0.3);
+    }
+
+    .logout-btn:hover {
+      transform: scale(1.07);
+      background: linear-gradient(135deg, #ffb703, #fb8500);
+    }
+
+    /* 📊 Dashboard Content */
+    .dashboard-content {
+      padding: 3rem 3rem 5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 5;
+    }
+
+    .dashboard-card {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 2.4rem 1.8rem;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      transition: all 0.4s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .dashboard-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      background: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .dashboard-card i {
+      font-size: 2.8rem;
+      color: #00b4d8;
+      margin-bottom: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .dashboard-card:hover i {
+      transform: scale(1.15) rotate(8deg);
+      color: #48cae4;
+    }
+
+    .dashboard-card h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #f1faee;
+      margin-bottom: 0.6rem;
+    }
+
+    .dashboard-card p {
+      color: #e0fbfc;
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.5;
+    }
+
+    .btn.primary {
+      display: inline-block;
+      background: linear-gradient(135deg, #00b4d8, #0077b6);
+      color: #fff;
+      padding: 0.7rem 1.5rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0, 183, 255, 0.3);
+    }
+
+    .btn.primary:hover {
+      background: linear-gradient(135deg, #ffb703, #fb8500);
+      transform: translateY(-4px);
+      box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+    }
+
+    /* ♿ Accessibility */
+    .accessibility-bar {
+      position: fixed;
+      bottom: 20px;
+      right: 25px;
+      display: flex;
+      gap: 0.6rem;
+      z-index: 1000;
+    }
+
+    .accessibility-bar button {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: #fff;
+      font-weight: bold;
+      border-radius: 10px;
+      padding: 0.6rem 1rem;
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .accessibility-bar button:hover {
+      background: rgba(255,255,255,0.6);
+      color: #001f3f;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #cce3f0;
+      opacity: 0.9;
+    }
+
+    .high-contrast {
+      filter: invert(1) hue-rotate(180deg);
+    }
+  </style>
+</head>
+<body>
+  <!-- 🌟 Floating Doctor-Themed Icons -->
+  <i class="fa-solid fa-stethoscope floating-icon icon1"></i>
+  <i class="fa-solid fa-pills floating-icon icon2"></i>
+  <i class="fa-solid fa-syringe floating-icon icon3"></i>
+  <i class="fa-solid fa-heart-pulse floating-icon icon4"></i>
+  <i class="fa-solid fa-user-nurse floating-icon icon5"></i>
+  <i class="fa-solid fa-microscope floating-icon icon6"></i>
+
+  <!-- 🏥 Dashboard Header -->
+  <header class="dashboard-header">
+    <h1 id="welcomeMessage">Welcome to Your Dashboard</h1>
+    <p id="userRoleMessage">Empowering healthcare through connection 🌍</p>
+    <button class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+  </header>
+
+  <!-- 📊 Dashboard Content -->
+  <section class="dashboard-content">
+    <div class="dashboard-card">
+      <i class="fa-solid fa-calendar-days"></i>
+      <h3>Upcoming Appointments</h3>
+      <p>You have no upcoming appointments yet.</p>
+      <a href="#" class="btn primary">Book Now</a>
+    </div>
+
+    <div class="dashboard-card">
+      <i class="fa-solid fa-notes-medical"></i>
+      <h3>Medical Records</h3>
+      <p>Access your secure medical documents anytime.</p>
+      <a href="#" class="btn primary">View Records</a>
+    </div>
+
+    <div class="dashboard-card">
+      <i class="fa-solid fa-brain"></i>
+      <h3>AI Symptom Checker</h3>
+      <p>Let our AI help you identify possible conditions.</p>
+      <a href="#" class="btn primary">Start Check</a>
+    </div>
+
+    <div class="dashboard-card">
+      <i class="fa-solid fa-user-md"></i>
+      <h3>Find Specialists</h3>
+      <p>Connect with certified professionals instantly.</p>
+      <a href="#" class="btn primary">Search Now</a>
+    </div>
+
+    <div class="dashboard-card">
+      <i class="fa-solid fa-comments"></i>
+      <h3>Community Forum</h3>
+      <p>Join discussions with other patients and doctors.</p>
+      <a href="#" class="btn primary">Join Forum</a>
+    </div>
+
+    <div class="dashboard-card">
+      <i class="fa-solid fa-headset"></i>
+      <h3>Support</h3>
+      <p>Need help? Our team is available 24/7.</p>
+      <a href="#" class="btn primary">Contact Support</a>
+    </div>
+  </section>
+
+  <!-- ♿ Accessibility Controls -->
+  <div class="accessibility-bar">
+    <button onclick="toggleContrast()">🌓</button>
+    <button onclick="increaseFont()">A+</button>
+    <button onclick="decreaseFont()">A−</button>
+    <button onclick="readPage()">🔊</button>
+  </div>
+
+  <footer>
+    © 2025 Telehealth Hubs for Underserved Areas | Inclusive, Secure, Accessible
+  </footer>
+
+  <script>
+    // Accessibility
+    let fontSize = 100;
+    function toggleContrast(){document.body.classList.toggle('high-contrast');}
+    function increaseFont(){fontSize+=10;document.body.style.fontSize=fontSize+'%';}
+    function decreaseFont(){fontSize=Math.max(80,fontSize-10);document.body.style.fontSize=fontSize+'%';}
+    function readPage(){const text=document.body.innerText;const u=new SpeechSynthesisUtterance(text);speechSynthesis.speak(u);}
+
+    // User greeting
+    document.addEventListener("DOMContentLoaded", ()=>{
+      const userName = localStorage.getItem("telehealthUser");
+      const userRole = localStorage.getItem("telehealthRole");
+      if(!userName){ window.location.href="login.html"; return; }
+      document.getElementById("welcomeMessage").textContent = `Welcome, ${userName}!`;
+      document.getElementById("userRoleMessage").textContent = `You are logged in as a ${userRole}. Explore your features below.`;
+    });
+
+    // Logout
+    document.querySelector(".logout-btn").addEventListener("click", ()=>{
+      localStorage.removeItem("telehealthUser");
+      localStorage.removeItem("telehealthRole");
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>

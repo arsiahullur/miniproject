@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Telehealth Hubs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* RESET */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      font-family: "Poppins", sans-serif;
+      overflow-x: hidden;
+      transition: font-size 0.3s ease;
+    }
+
+    /* 🌌 Animated Parallax Gradient Background */
+    body {
+      background: radial-gradient(circle at 20% 30%, #004080, transparent 70%),
+                  radial-gradient(circle at 80% 70%, #002855, transparent 60%),
+                  linear-gradient(135deg, #001a33, #002b55, #003b73, #004c91, #0061a8);
+      background-size: 400% 400%;
+      animation: moveGradient 18s ease infinite;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #000;
+      padding-top: 80px; /* Space for toolbar */
+      position: relative;
+      min-height: 100vh;
+    }
+
+    @keyframes moveGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ✨ Floating Doctor Icons */
+    .medical-icons span {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.15;
+      color: #fff;
+      animation: float 12s linear infinite;
+      user-select: none;
+    }
+    .medical-icons span:nth-child(1) { top: 10%; left: 15%; animation-delay: 0s; }
+    .medical-icons span:nth-child(2) { top: 60%; left: 70%; animation-delay: 2s; }
+    .medical-icons span:nth-child(3) { top: 30%; left: 80%; animation-delay: 4s; }
+    .medical-icons span:nth-child(4) { top: 80%; left: 25%; animation-delay: 6s; }
+    .medical-icons span:nth-child(5) { top: 50%; left: 5%; animation-delay: 8s; }
+
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 0.2; }
+      50% { transform: translateY(-20px); opacity: 0.4; }
+      100% { transform: translateY(0); opacity: 0.2; }
+    }
+
+    /* ♿ Accessibility Toolbar */
+    .accessibility-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0.6rem 0;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 999;
+    }
+
+    .accessibility-bar button {
+      background: #003b73;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .accessibility-bar button:hover {
+      transform: scale(1.1);
+      background: #0077b6;
+      box-shadow: 0 0 10px rgba(0,119,182,0.5);
+    }
+
+    /* 💎 Login Card */
+    .form-section {
+      position: relative;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.15);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(20px);
+      border-radius: 25px;
+      box-shadow: 0 15px 45px rgba(0,0,0,0.3);
+      max-width: 420px;
+      width: 90%;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      color: #000;
+      animation: fadeUp 1.3s ease;
+      margin-bottom: 3rem;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-section h1 {
+      font-size: 2rem;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(0, 119, 182, 0.8);
+      margin-bottom: 0.6rem;
+      font-weight: 700;
+    }
+
+    .form-subtitle {
+      font-size: 1.1rem;
+      color: #e0f7ff;
+      margin-bottom: 2rem;
+    }
+
+    /* 🧩 Form Inputs */
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    label {
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+
+    input {
+      padding: 0.8rem;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+      color: #000;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #00b4d8;
+      box-shadow: 0 0 12px rgba(0,180,216,0.5);
+      background: rgba(255,255,255,0.4);
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, #0077b6, #00b4d8);
+      color: #fff;
+      border: none;
+      padding: 0.9rem 1.5rem;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      box-shadow: 0 4px 15px rgba(0, 119, 182, 0.5);
+    }
+
+    .btn.primary:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(0, 180, 216, 0.8);
+    }
+
+    .form-link {
+      margin-top: 1.5rem;
+      text-align: center;
+      color: #fff;
+    }
+
+    .form-link a {
+      color: #00b4d8;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .form-link a:hover {
+      text-decoration: underline;
+    }
+
+    /* ⚫ Footer */
+    footer {
+      text-align: center;
+      color: #cde4f7;
+      font-size: 0.9rem;
+      opacity: 0.9;
+      z-index: 2;
+      padding-bottom: 2rem;
+    }
+
+    /* 🔍 Zoomable Text */
+    :root { --font-scale: 1; }
+    body, h1, h2, h3, p, a, label, input, button {
+      font-size: calc(1rem * var(--font-scale));
+    }
+
+    /* ♿ High Contrast Mode */
+    .high-contrast {
+      filter: invert(1) hue-rotate(180deg);
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating Doctor Icons -->
+  <div class="medical-icons">
+    <span>🩺</span>
+    <span>💊</span>
+    <span>❤️</span>
+    <span>👨‍⚕️</span>
+    <span>🏥</span>
+  </div>
+
+  <!-- Accessibility Toolbar -->
+  <div class="accessibility-bar">
+    <button onclick="toggleContrast()">🌓 Contrast</button>
+    <button onclick="increaseFont()">A+</button>
+    <button onclick="decreaseFont()">A−</button>
+    <button onclick="readPage()">🔊 Read Page</button>
+  </div>
+
+  <!-- Login Form -->
+  <section class="form-section">
+    <h1>Welcome Back 👋</h1>
+    <p class="form-subtitle">Access your Telehealth account</p>
+
+    <form id="loginForm" class="login-form">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Enter your email" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter your password" required />
+
+      <button type="submit" class="btn primary">Login</button>
+
+      <p class="form-link">
+        Don’t have an account? <a href="signup.html">Sign up here</a>.
+      </p>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Telehealth Hubs for Underserved Areas | Inclusive • Secure • Accessible</p>
+  </footer>
+
+  <!-- Accessibility + Login Script -->
+  <script>
+    let fontScale = 1;
+    function toggleContrast() {
+      document.body.classList.toggle("high-contrast");
+    }
+    function increaseFont() {
+      fontScale = Math.min(1.6, fontScale + 0.1);
+      document.documentElement.style.setProperty("--font-scale", fontScale);
+    }
+    function decreaseFont() {
+      fontScale = Math.max(0.8, fontScale - 0.1);
+      document.documentElement.style.setProperty("--font-scale", fontScale);
+    }
+    function readPage() {
+      const text = document.body.innerText;
+      const utterance = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(utterance);
+    }
+
+    /* ✅ Login Logic */
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value.trim().toLowerCase();
+      const password = document.getElementById("password").value.trim();
+
+      const users = JSON.parse(localStorage.getItem("telehealthUsers") || "[]");
+
+      const user = users.find(
+        (u) => u.email.toLowerCase() === email && u.password === password
+      );
+
+      if (user) {
+        alert("✅ Login successful!");
+        localStorage.setItem("telehealthUser", user.name);
+        localStorage.setItem("telehealthRole", user.role);
+        window.location.href = "dashboard.html";
+      } else {
+        alert("❌ Invalid email or password. Please try again or sign up first.");
+      }
+    });
+  </script>
+</body>
+</html>

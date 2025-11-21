@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Telehealth Hubs for Underserved Areas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* 🌎 Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      font-family: "Outfit", sans-serif;
+      transition: font-size 0.3s ease;
+      overflow-x: hidden;
+    }
+
+    /* 🎨 Animated Gradient Background */
+    body {
+      color: #000;
+      background: linear-gradient(-45deg, #002855, #003b73, #004c91, #005fa3);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      position: relative;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* 💫 Floating Medical Icons */
+    .floating-icons {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .icon {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.25;
+      animation: float 18s linear infinite;
+      user-select: none;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(110vh) rotate(0deg);
+        opacity: 0;
+      }
+      20% { opacity: 0.5; }
+      80% { opacity: 0.5; }
+      100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Random Positions */
+    .icon:nth-child(1) { left: 5%; animation-delay: 0s; }
+    .icon:nth-child(2) { left: 20%; animation-delay: 3s; }
+    .icon:nth-child(3) { left: 40%; animation-delay: 6s; }
+    .icon:nth-child(4) { left: 60%; animation-delay: 1s; }
+    .icon:nth-child(5) { left: 75%; animation-delay: 4s; }
+    .icon:nth-child(6) { left: 90%; animation-delay: 2s; }
+
+    /* 🔲 Accessibility Toolbar */
+    .accessibility-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(6px);
+      padding: 0.7rem 0;
+      z-index: 1000;
+    }
+
+    .accessibility-bar button {
+      background: #003b73;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    .accessibility-bar button:hover {
+      background: #005fa3;
+      transform: scale(1.05);
+    }
+
+    /* 🏠 Hero Section */
+    .hero {
+      text-align: center;
+      padding: 8rem 2rem 6rem;
+      background-color: rgba(255, 255, 255, 0.65);
+      background-blend-mode: overlay;
+      z-index: 2;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      color: #000;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+
+    .btn {
+      text-decoration: none;
+      display: inline-block;
+      padding: 0.8rem 1.6rem;
+      border-radius: 8px;
+      font-weight: 600;
+      margin: 0.5rem;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .btn.primary {
+      background-color: #0077b6;
+      color: #fff;
+    }
+
+    .btn.secondary {
+      background-color: #ffb703;
+      color: #000;
+    }
+
+    .btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* 💡 Sections */
+    .about, .features, .cta {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: rgba(255,255,255,0.85);
+      margin: 2rem auto;
+      border-radius: 16px;
+      max-width: 1000px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 2;
+    }
+
+    .about h2, .features h2, .cta h2 {
+      font-size: 2rem;
+      color: #003b73;
+      margin-bottom: 1rem;
+    }
+
+    .features {
+      background: rgba(255,255,255,0.9);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .feature-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* 🚀 CTA */
+    .cta {
+      background-color: #003b73;
+      color: white;
+    }
+
+    .cta h2 { color: white; }
+
+    /* ⚫ Footer */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #002855;
+      color: white;
+      font-size: 0.9rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* 🔍 Zoomable Text */
+    :root {
+      --font-scale: 1;
+    }
+    body, h1, h2, h3, p, a, button {
+      font-size: calc(1rem * var(--font-scale));
+    }
+
+    /* ♿ High Contrast Mode */
+    .high-contrast {
+      filter: invert(1) hue-rotate(180deg);
+    }
+  </style>
+</head>
+<body>
+  <!-- 🩺 Floating Doctor-Themed Icons -->
+  <div class="floating-icons">
+    <div class="icon">🩺</div>
+    <div class="icon">💊</div>
+    <div class="icon">❤️</div>
+    <div class="icon">👨‍⚕️</div>
+    <div class="icon">👩‍⚕️</div>
+    <div class="icon">🏥</div>
+  </div>
+
+  <!-- Accessibility Toolbar -->
+  <div class="accessibility-bar">
+    <button onclick="toggleContrast()">🌓 Contrast</button>
+    <button onclick="increaseFont()">A+</button>
+    <button onclick="decreaseFont()">A−</button>
+    <button onclick="readPage()">🔊 Read Page</button>
+  </div>
+
+  <!-- Hero -->
+  <header class="hero">
+    <h1>Telehealth Hubs for Underserved Areas</h1>
+    <p>Connecting rural patients with urban doctors through accessible, inclusive telehealth technology.</p>
+    <div>
+      <a href="signup.html" class="btn primary">Join as Patient</a>
+      <a href="signup.html" class="btn secondary">Join as Doctor</a>
+    </div>
+  </header>
+
+  <!-- About -->
+  <section class="about">
+    <h2>Breaking Barriers to Healthcare Access</h2>
+    <p>Our telehealth hubs bridge the gap between remote communities and medical specialists by offering virtual consultations, medical record access, and AI-powered accessibility features — including voice guidance, sign language translation, and Braille device support.</p>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <h2>Inclusive Features</h2>
+    <div class="feature-grid">
+      <div class="feature-card"><h3>🎧 Audio Guidance</h3><p>Voice-assisted navigation and spoken feedback for visually impaired users.</p></div>
+      <div class="feature-card"><h3>🤟 Sign Language Support</h3><p>AI-based live translation between sign language and speech for seamless communication.</p></div>
+      <div class="feature-card"><h3>💊 Digital Health Records</h3><p>Secure, centralized medical records with read-aloud options.</p></div>
+      <div class="feature-card"><h3>📶 Offline Access</h3><p>Access critical features even with limited connectivity using SMS or local caching.</p></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>Ready to Experience Inclusive Healthcare?</h2>
+    <a href="signup.html" class="btn secondary">Get Started</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>© 2025 Telehealth Hubs for Underserved Areas | Inclusive, Secure, Accessible</footer>
+
+  <!-- ♿ Accessibility JS -->
+  <script>
+    let fontScale = 1;
+
+    function toggleContrast() {
+      document.body.classList.toggle('high-contrast');
+    }
+
+    function increaseFont() {
+      fontScale = Math.min(1.5, fontScale + 0.1);
+      document.documentElement.style.setProperty('--font-scale', fontScale);
+    }
+
+    function decreaseFont() {
+      fontScale = Math.max(0.8, fontScale - 0.1);
+      document.documentElement.style.setProperty('--font-scale', fontScale);
+    }
+
+    function readPage() {
+      const text = document.body.innerText;
+      const utterance = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(utterance);
+    }
+  </script>
+</body>
+</html>
